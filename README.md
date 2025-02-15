@@ -101,6 +101,5 @@ You can fetch a MF's Navby its code as below by using the _fetchNavBySchemeCode_
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+This package supports iOS, Android, macos and web.
+I've not tested this for the windows.
