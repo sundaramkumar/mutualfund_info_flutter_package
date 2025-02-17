@@ -24,7 +24,6 @@ dev_dependencies:
 flutter:
 
 # Publisher Information
-publish_to: https://pub.dev
 repository: https://github.com/sundaramkumar/mutualfund_info_flutter_package
 issue_tracker: https://github.com/sundaramkumar/mutualfund_info_flutter_package/issues
 maintainers:
