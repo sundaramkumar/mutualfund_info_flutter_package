@@ -1,7 +1,7 @@
 name: mutualfund_info
 description: "A new Flutter package project."
 version: 0.0.1
-homepage:
+homepage: https://github.com/sundaramkumar/mutualfund_info_flutter_package
 
 environment:
   sdk: ^3.6.1
