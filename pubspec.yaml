@@ -1,6 +1,6 @@
 name: mutualfund_info
 description: "Flutter Package to get the current(Today's) NAVs of Mutual Funds in India."
-version: 0.0.1
+version: 0.0.2
 homepage: https://www.kumarsundaram.com
 
 environment:

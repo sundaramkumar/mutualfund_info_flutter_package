@@ -11,6 +11,8 @@ The data is being fetched from Association of Mutual Funds India (AMFI)'s portal
 import 'package:../mutualfund_info/mutualfund_info.dart' as mfinfo;
 ```
 
+For more info on usage, see the example folder, which contains a sample app with methods to use the mutualfund_info package features.
+
 ### Get all Navs . This returns all the Mutual Funds' Navs in an array format
 
 This will be an array of objects of all the Schemes in Indian MF

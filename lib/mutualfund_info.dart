@@ -59,7 +59,7 @@ bool isError(String txt) {
 /// It resolves with the fetched data if there is no error.
 /// Otherwise, it rejects with an error message.
 /// @param {String} url - URL to fetch data from
-/// @returns {Future<String>}
+/// @returns {Future`<String>`}
 Future<String> fetchNavs(String url) async {
   final response = await http.get(Uri.parse(url));
   if (response.statusCode == 200) {
@@ -78,7 +78,7 @@ Future<String> fetchNavs(String url) async {
 /// returns an array of objects. Each object represents
 /// a mutual fund and contains its details.
 /// @param {String} txt - the text fetched from the NAV URL
-/// @returns {List<Map<String, String>>> an array of objects, each representing a mutual fund
+/// @returns {List`<Map<String, String>>`> an array of objects, each representing a mutual fund
 List<Map<String, String>> prepareNavsArray(String txt) {
   // Removes blank lines from the given text.
   String removeBlankLines(String txt) {
