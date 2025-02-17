@@ -12,6 +12,7 @@ and the Flutter guide for
 -->
 
 Flutter Package to get the current(Today's) NAVs of Mutual Funds in India
+This package supports iOS, Android, MacOS and web.
 
 The data is being fetched from Association of Mutual Funds India (AMFI)'s portal https://www.amfiindia.com/
 
@@ -102,4 +103,4 @@ You can fetch a MF's Navby its code as below by using the _fetchNavBySchemeCode_
 ## Additional information
 
 This package supports iOS, Android, macos and web.
-I've not tested this for the windows.
+I've not tested this for the windows, but it should, will update once I test
