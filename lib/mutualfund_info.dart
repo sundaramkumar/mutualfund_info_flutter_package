@@ -1,11 +1,14 @@
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 // The MutualFundsInfo class provides methods to
 // fetch and retrieve information about mutual funds in India,
 // specifically their details and with Net Asset Values (NAVs)
 class MutualFundsInfo {
-  final String navURL =
-      "https://www.amfiindia.com/spages/NAVAll.txt"; // URL to fetch NAV data
+  // URL to fetch NAV data
+  final String navURL = "https://www.amfiindia.com/spages/NAVAll.txt";
 
   // Method to get information about the package
   String about() {
@@ -61,12 +64,43 @@ bool isError(String txt) {
 /// @param {String} url - URL to fetch data from
 /// @returns {Future`<String>`}
 Future<String> fetchNavs(String url) async {
+  final cacheDir = await getTemporaryDirectory();
+  final cacheFile = File('${cacheDir.path}/nav_data.txt');
+  final cacheExpiryFile = File('${cacheDir.path}/nav_data_expiry.txt');
+
+  // Check if cache exists and is not expired
+  if (await cacheFile.exists() && await cacheExpiryFile.exists()) {
+    final expiryDateStr = await cacheExpiryFile.readAsString();
+    final expiryDate = DateTime.parse(expiryDateStr);
+    final indianTime =
+        DateTime.now().toUtc().add(Duration(hours: 5, minutes: 30));
+    print('Cache expiry date: $expiryDate');
+    print('Current Indian time: $indianTime');
+    if (indianTime.isBefore(expiryDate) && indianTime.hour < 23) {
+      print('Fetching from cache -->');
+      return await cacheFile.readAsString();
+    } else {
+      print('Cache expired or invalid time, fetching from URL');
+    }
+  } else {
+    print('Cache files do not exist, fetching from URL');
+  }
+
   final response = await http.get(Uri.parse(url));
   if (response.statusCode == 200) {
+    print('Fetching from URL *****>');
     final result = response.body;
+
     if (isError(result)) {
       throw "Error in fetching NAVs."; // Check for errors
     } else {
+      // Save data to cache
+      await cacheFile.writeAsString(result);
+      // Set cache expiry to 24 hours from now
+      final now = DateTime.now().toUtc().add(Duration(hours: 5, minutes: 30));
+      final expiryDate = DateTime(now.year, now.month, now.day, 23, 0, 0);
+      await cacheExpiryFile.writeAsString(expiryDate.toIso8601String());
+      print('Data cached with expiry date: $expiryDate');
       return result; // Resolve the fetched text
     }
   } else {
