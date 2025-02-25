@@ -63,6 +63,8 @@ bool isError(String txt) {
 /// Otherwise, it rejects with an error message.
 /// @param {String} url - URL to fetch data from
 /// @returns {Future`<String>`}
+///
+/// The NAV data is updated every business day at 11:00 PM IST.
 Future<String> fetchNavs(String url) async {
   final cacheDir = await getTemporaryDirectory();
   final cacheFile = File('${cacheDir.path}/nav_data.txt');
@@ -74,10 +76,9 @@ Future<String> fetchNavs(String url) async {
     final expiryDate = DateTime.parse(expiryDateStr);
     final indianTime =
         DateTime.now().toUtc().add(Duration(hours: 5, minutes: 30));
-    print('Cache expiry date: $expiryDate');
-    print('Current Indian time: $indianTime');
+    // if the time is before 11:00 PM IST and the cache is not expired
     if (indianTime.isBefore(expiryDate) && indianTime.hour < 23) {
-      print('Fetching from cache -->');
+      // Load from cache
       return await cacheFile.readAsString();
     } else {
       print('Cache expired or invalid time, fetching from URL');
@@ -88,7 +89,7 @@ Future<String> fetchNavs(String url) async {
 
   final response = await http.get(Uri.parse(url));
   if (response.statusCode == 200) {
-    print('Fetching from URL *****>');
+    // load the data from URL.
     final result = response.body;
 
     if (isError(result)) {
@@ -96,11 +97,10 @@ Future<String> fetchNavs(String url) async {
     } else {
       // Save data to cache
       await cacheFile.writeAsString(result);
-      // Set cache expiry to 24 hours from now
+      // Set cache expiry to 11:00 PM IST
       final now = DateTime.now().toUtc().add(Duration(hours: 5, minutes: 30));
       final expiryDate = DateTime(now.year, now.month, now.day, 23, 0, 0);
       await cacheExpiryFile.writeAsString(expiryDate.toIso8601String());
-      print('Data cached with expiry date: $expiryDate');
       return result; // Resolve the fetched text
     }
   } else {
