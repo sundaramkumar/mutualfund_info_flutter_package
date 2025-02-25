@@ -1,7 +1,10 @@
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
+import 'package:logger/logger.dart';
+
+// Create a logger instance
+final logger = Logger();
 
 // The MutualFundsInfo class provides methods to
 // fetch and retrieve information about mutual funds in India,
@@ -81,10 +84,10 @@ Future<String> fetchNavs(String url) async {
       // Load from cache
       return await cacheFile.readAsString();
     } else {
-      print('Cache expired or invalid time, fetching from URL');
+      logger.i('Cache expired or invalid time, fetching from URL');
     }
   } else {
-    print('Cache files do not exist, fetching from URL');
+    logger.e('Cache files do not exist, fetching from URL');
   }
 
   final response = await http.get(Uri.parse(url));
