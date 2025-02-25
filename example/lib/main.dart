@@ -76,8 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final mfInfo = mfinfo.MutualFundsInfo();
     print(mfInfo.about());
     getAllNavs();
-    getNAVBySchemeCode();
-    getNAVBySchemeName();
+    // getNAVBySchemeCode();
+    // getNAVBySchemeName();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
